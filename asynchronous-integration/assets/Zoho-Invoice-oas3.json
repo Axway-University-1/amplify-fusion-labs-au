@@ -1,0 +1,1150 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Zoho Invoice API",
+    "description": "The Zoho Invoice API allows you to perform all the operations that you do with our web client.\n\nZoho Invoice API is built using REST principles which ensures predictable URLs that makes writing applications easy. This API follows HTTP rules, enabling a wide range of HTTP clients which can be used to interact with the API.\n\nAn invoice is a statement of items sold by a seller. It includes all the details of sale including units of goods, price of goods sold, shipping details, etc.",
+    "version": "3.1.1",
+    "contact": {
+      "name": "Zoho Invoice",
+      "email": "support@zohoinvoice.com",
+      "url": "https://www.zoho.com/invoice/api/v3"
+    },
+    "license": {
+      "name": "GPL 3.0",
+      "url": "https://www.gnu.org/licenses/gpl-3.0.html"
+    },
+    "termsOfService": "https://www.zoho.com/developer/terms.html"
+  },
+  "servers": [
+    {
+      "url": "https://invoice.zoho.com",
+      "description": "United States"
+    },
+    {
+      "url": "https://invoice.zoho.eu",
+      "description": "Europe"
+    },
+    {
+      "url": "https://accounts.zoho.in",
+      "description": "India"
+    },
+    {
+      "url": "https://accounts.zoho.com.au",
+      "description": "Australia"
+    },
+    {
+      "url": "https://accounts.zoho.jp",
+      "description": "Japan"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Invoice",
+      "description": "Invoice management"
+    },
+    {
+      "name": "Invoice Payment",
+      "description": "Invoice Payment management"
+    }
+  ],
+  "paths": {
+    "/api/v3/invoices": {
+      "get": {
+        "tags": [
+          "Invoice"
+        ],
+        "summary": "Get All Invoices",
+        "description": "Selecting a particular invoice fromt the list of invoices",
+        "parameters": [
+          {
+            "name": "X-com-zoho-invoice-organizationid",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "{{organization_id}}",
+            "description": "Zoho Organization ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "invoices": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/invoice"
+                      }
+                    },
+                    "page_context": {
+                      "$ref": "#/components/schemas/page_context"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "GetInvoices",
+        "security": [
+          {
+            "OAuth2": [
+              "ZohoInvoice.invoices.READ"
+            ]
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Invoice"
+        ],
+        "summary": "Create Invoice",
+        "description": "Creating invoice to a particular customer",
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "application/json",
+            "description": "Request Body Type"
+          },
+          {
+            "name": "X-com-zoho-invoice-organizationid",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "{{organization_id}}",
+            "description": "Zoho Organization ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "invoice": {
+                      "$ref": "#/components/schemas/invoice"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "CreateInvoice",
+        "security": [
+          {
+            "OAuth2": [
+              "ZohoInvoice.invoices.CREATE"
+            ]
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/invoice_creation_request"
+              },
+              "examples": {
+                "Invoice example": {
+                  "value": {
+                    "customer_id": 982000000567001,
+                    "contact_persons": [
+                      "982000000870911",
+                      "982000000870915"
+                    ],
+                    "invoice_number": "INV-00003",
+                    "reference_number": " ",
+                    "template_id": 982000000000143,
+                    "date": "2013-11-17",
+                    "payment_terms": 15,
+                    "payment_terms_label": "Net 15",
+                    "due_date": "2013-12-03",
+                    "discount": 0,
+                    "is_discount_before_tax": true,
+                    "discount_type": "item_level",
+                    "is_inclusive_tax": false,
+                    "exchange_rate": 1,
+                    "recurring_invoice_id": " ",
+                    "invoiced_estimate_id": " ",
+                    "salesperson_name": " ",
+                    "project_id": 90300000087378,
+                    "line_items": [
+                      {
+                        "item_id": 982000000030049,
+                        "project_id": 90300000087378,
+                        "time_entry_ids": [],
+                        "expense_id": " ",
+                        "name": "Hard Drive",
+                        "product_type": "goods",
+                        "description": "500GB, USB 2.0 interface 1400 rpm, protective hard case.",
+                        "item_order": 1,
+                        "rate": 120,
+                        "quantity": 1,
+                        "unit": " ",
+                        "discount": 0,
+                        "tax_id": 982000000557028,
+                        "tax_name": "VAT",
+                        "tax_type": "tax",
+                        "tax_percentage": 12.5,
+                        "item_total": 120
+                      }
+                    ],
+                    "allow_partial_payments": true,
+                    "custom_body": " ",
+                    "custom_subject": " ",
+                    "notes": "Looking forward for your business.",
+                    "terms": "Terms & Conditions apply",
+                    "shipping_charge": 0,
+                    "adjustment": 0,
+                    "adjustment_description": " ",
+                    "reason": " "
+                  }
+                }
+              }
+            }
+          },
+          "description": ""
+        }
+      }
+    },
+    "/api/v3/invoices/{Invoice_id}": {
+      "get": {
+        "tags": [
+          "Invoice"
+        ],
+        "summary": "Get Invoice",
+        "description": "Selecting a particular invoice from the list of invoices",
+        "parameters": [
+          {
+            "name": "X-com-zoho-invoice-organizationid",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "{{organization_id}}",
+            "description": "Zoho Organization ID"
+          },
+          {
+            "name": "Invoice_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "identifier of the invoice to be selected"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "invoice": {
+                      "$ref": "#/components/schemas/invoice"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "GetInvoiceById",
+        "security": [
+          {
+            "OAuth2": [
+              "ZohoInvoice.invoices.READ"
+            ]
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Invoice"
+        ],
+        "summary": "Update Invoice",
+        "description": "Update an existing invoice. To delete a line item just remove it from the line_items list.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/invoice"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "application/json",
+            "description": "Request Body Type"
+          },
+          {
+            "name": "X-com-zoho-invoice-organizationid",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "{{organization_id}}",
+            "description": "Zoho Organization ID"
+          },
+          {
+            "name": "Invoice_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "identifier of the invoice to be updated"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "invoice": {
+                      "$ref": "#/components/schemas/invoice"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "UpdateInvoice",
+        "security": [
+          {
+            "OAuth2": [
+              "ZohoInvoice.invoices.UPDATE"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Invoice"
+        ],
+        "summary": "Delete Invoice",
+        "description": "Deleting invoice using a particular invoiceID",
+        "parameters": [
+          {
+            "name": "X-com-zoho-invoice-organizationid",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "{{organization_id}}",
+            "description": "Zoho Organization ID"
+          },
+          {
+            "name": "Invoice_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "identifier of the invoice to be deleted"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "DeleteInvoice",
+        "security": [
+          {
+            "OAuth2": [
+              "ZohoInvoice.invoices.DELETE"
+            ]
+          }
+        ]
+      },
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "Invoice_id",
+          "in": "path",
+          "description": "identifier of the invoice to be selected",
+          "required": true
+        }
+      ]
+    },
+    "/api/v3/invoices/{Invoice_id}/payments": {
+      "get": {
+        "tags": [
+          "Invoice Payment"
+        ],
+        "summary": "List Invoice Payments",
+        "parameters": [
+          {
+            "name": "X-com-zoho-invoice-organizationid",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "{{organization_id}}",
+            "description": "Zoho Organization ID"
+          },
+          {
+            "name": "Invoice_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "identifier of the invoice to select associated payments from"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        },
+        "operationId": "ListPayments",
+        "description": "Get the list of payments made for an invoice.",
+        "security": [
+          {
+            "OAuth2": [
+              "ZohoInvoice.invoices.READ"
+            ]
+          }
+        ]
+      }
+    },
+    "/api/v3/invoices/{Invoice_id}/status/sent": {
+      "post": {
+        "tags": [
+          "Invoice"
+        ],
+        "summary": "Mark as Sent",
+        "description": "Marking an invoice as sent",
+        "parameters": [
+          {
+            "name": "X-com-zoho-invoice-organizationid",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "{{organization_id}}",
+            "description": "Zoho Organization ID"
+          },
+          {
+            "name": "Invoice_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "identifier of the invoice to be maked as sent"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        },
+        "operationId": "MarkAsSent",
+        "security": [
+          {
+            "OAuth2": [
+              "ZohoInvoice.invoices.UPDATE"
+            ]
+          }
+        ]
+      }
+    },
+    "/api/v3/invoices/{Invoice_id}/email": {
+      "post": {
+        "tags": [
+          "Invoice"
+        ],
+        "summary": "Email Invoice",
+        "description": "After viewing the email, the email is sent to the customer",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/email"
+              },
+              "examples": {
+                "Example Email": {
+                  "value": {
+                    "send_from_org_email_id": false,
+                    "to_mail_ids": [
+                      "willsmith@bowmanfurniture.com"
+                    ],
+                    "cc_mail_ids": [
+                      "peterparker@bowmanfurniture.com"
+                    ],
+                    "subject": "Invoice from Zillium Inc (Invoice#: INV-00001)",
+                    "body": "Dear Customer,         <br><br><br><br>Thanks for your business.         <br><br><br><br>The invoice INV-00001 is attached with this email. You can choose the easy way out and <a href= https://invoice.zoho.com/portal/zylkar/secure?CInvoiceID=b9800228e011ae86abe71227bdacb3c68e1af685f647dcaed747812e0b9314635e55ac6223925675b371fcbd2d5ae3dc  >pay online for this invoice.</a>         <br><br>Here's an overview of the invoice for your reference.         <br><br><br><br>Invoice Overview:         <br><br>Invoice  : INV-00001         <br><br>Date : 05 Aug 2013         <br><br>Amount : $541.82         <br><br><br><br>It was great working with you. Looking forward to working with you again.<br><br><br>\\nRegards<br>\\nZillium Inc<br>\\n\","
+                  }
+                }
+              }
+            }
+          },
+          "description": "Optional email paramaters"
+        },
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "multipart/form-data",
+            "description": "Request Body Type"
+          },
+          {
+            "name": "X-com-zoho-invoice-organizationid",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "{{organization_id}}",
+            "description": "Zoho Organization ID"
+          },
+          {
+            "name": "Invoice_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "identifier of the invoice to be emailed"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        },
+        "operationId": "Email",
+        "security": [
+          {
+            "OAuth2": [
+              "ZohoInvoice.invoices.UPDATE"
+            ]
+          }
+        ]
+      }
+    },
+    "/api/v3/invoices/{Invoice_id}/writeoff": {
+      "post": {
+        "tags": [
+          "Invoice"
+        ],
+        "summary": "Write off invoice",
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "multipart/form-data",
+            "description": "Request Body Type"
+          },
+          {
+            "name": "X-com-zoho-invoice-organizationid",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "example": "{{organization_id}}",
+            "description": "Zoho Organization ID"
+          },
+          {
+            "name": "Invoice_id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "identifier of the invoice to be wrote off"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        },
+        "operationId": "WriteOff",
+        "description": "Write off the invoice balance amount of an invoice.",
+        "security": [
+          {
+            "OAuth2": [
+              "ZohoInvoice.invoices.UPDATE"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "invoice": {
+        "type": "object",
+        "properties": {
+          "invoice_id": {
+            "type": "string"
+          },
+          "ach_payment_initiated": {
+            "type": "boolean"
+          },
+          "zcrm_potential_id": {
+            "type": "string"
+          },
+          "zcrm_potential_name": {
+            "type": "string"
+          },
+          "customer_name": {
+            "type": "string"
+          },
+          "customer_id": {
+            "type": "string"
+          },
+          "company_name": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "color_code": {
+            "type": "string"
+          },
+          "current_sub_status_id": {
+            "type": "string"
+          },
+          "current_sub_status": {
+            "type": "string"
+          },
+          "invoice_number": {
+            "type": "string"
+          },
+          "reference_number": {
+            "type": "string"
+          },
+          "date": {
+            "type": "string"
+          },
+          "due_date": {
+            "type": "string"
+          },
+          "due_days": {
+            "type": "string"
+          },
+          "currency_id": {
+            "type": "string"
+          },
+          "schedule_time": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "currency_code": {
+            "type": "string"
+          },
+          "currency_symbol": {
+            "type": "string"
+          },
+          "template_type": {
+            "type": "string"
+          },
+          "no_of_copies": {
+            "type": "integer"
+          },
+          "show_no_of_copies": {
+            "type": "boolean"
+          },
+          "is_viewed_by_client": {
+            "type": "boolean"
+          },
+          "has_attachment": {
+            "type": "boolean"
+          },
+          "client_viewed_time": {
+            "type": "string"
+          },
+          "invoice_url": {
+            "type": "string"
+          },
+          "project_name": {
+            "type": "string"
+          },
+          "billing_address": {
+            "type": "object",
+            "properties": {
+              "address": {
+                "type": "string"
+              },
+              "street2": {
+                "type": "string"
+              },
+              "city": {
+                "type": "string"
+              },
+              "state": {
+                "type": "string"
+              },
+              "zipcode": {
+                "type": "string"
+              },
+              "country": {
+                "type": "string"
+              },
+              "phone": {
+                "type": "string"
+              },
+              "fax": {
+                "type": "string"
+              },
+              "attention": {
+                "type": "string"
+              }
+            }
+          },
+          "shipping_address": {
+            "type": "object",
+            "properties": {
+              "address": {
+                "type": "string"
+              },
+              "street2": {
+                "type": "string"
+              },
+              "city": {
+                "type": "string"
+              },
+              "state": {
+                "type": "string"
+              },
+              "zipcode": {
+                "type": "string"
+              },
+              "country": {
+                "type": "string"
+              },
+              "phone": {
+                "type": "string"
+              },
+              "fax": {
+                "type": "string"
+              },
+              "attention": {
+                "type": "string"
+              }
+            }
+          },
+          "country": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "created_by": {
+            "type": "string"
+          },
+          "updated_time": {
+            "type": "string"
+          },
+          "transaction_type": {
+            "type": "string"
+          },
+          "total": {
+            "type": "integer"
+          },
+          "balance": {
+            "type": "integer"
+          },
+          "created_time": {
+            "type": "string"
+          },
+          "last_modified_time": {
+            "type": "string"
+          },
+          "is_emailed": {
+            "type": "boolean"
+          },
+          "is_viewed_in_mail": {
+            "type": "boolean"
+          },
+          "mail_first_viewed_time": {
+            "type": "string"
+          },
+          "mail_last_viewed_time": {
+            "type": "string"
+          },
+          "reminders_sent": {
+            "type": "integer"
+          },
+          "last_reminder_sent_date": {
+            "type": "string"
+          },
+          "payment_expected_date": {
+            "type": "string"
+          },
+          "last_payment_date": {
+            "type": "string"
+          },
+          "custom_fields": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "custom_field_hash": {
+            "type": "object",
+            "properties": {}
+          },
+          "template_id": {
+            "type": "string"
+          },
+          "documents": {
+            "type": "string"
+          },
+          "salesperson_id": {
+            "type": "string"
+          },
+          "salesperson_name": {
+            "type": "string"
+          },
+          "shipping_charge": {
+            "type": "integer"
+          },
+          "adjustment": {
+            "type": "integer"
+          },
+          "write_off_amount": {
+            "type": "integer"
+          },
+          "exchange_rate": {
+            "type": "integer"
+          }
+        }
+      },
+      "page_context": {
+        "type": "object",
+        "properties": {
+          "page": {
+            "type": "integer"
+          },
+          "per_page": {
+            "type": "integer"
+          },
+          "has_more_page": {
+            "type": "boolean"
+          },
+          "report_name": {
+            "type": "string"
+          },
+          "applied_filter": {
+            "type": "string"
+          },
+          "custom_fields": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "sort_column": {
+            "type": "string"
+          },
+          "sort_order": {
+            "type": "string"
+          }
+        }
+      },
+      "email": {
+        "type": "object",
+        "properties": {
+          "send_from_org_email_id": {
+            "type": "boolean"
+          },
+          "to_mail_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "cc_mail_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "subject": {
+            "type": "string"
+          },
+          "body": {
+            "type": "string"
+          }
+        },
+        "x-examples": {}
+      },
+      "invoice_creation_request": {
+        "type": "object",
+        "x-examples": {},
+        "properties": {
+          "customer_id": {
+            "type": "integer"
+          },
+          "contact_persons": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "invoice_number": {
+            "type": "string"
+          },
+          "reference_number": {
+            "type": "string"
+          },
+          "template_id": {
+            "type": "integer"
+          },
+          "date": {
+            "type": "string"
+          },
+          "payment_terms": {
+            "type": "integer"
+          },
+          "payment_terms_label": {
+            "type": "string"
+          },
+          "due_date": {
+            "type": "string"
+          },
+          "discount": {
+            "type": "integer"
+          },
+          "is_discount_before_tax": {
+            "type": "boolean"
+          },
+          "discount_type": {
+            "type": "string"
+          },
+          "is_inclusive_tax": {
+            "type": "boolean"
+          },
+          "exchange_rate": {
+            "type": "integer"
+          },
+          "recurring_invoice_id": {
+            "type": "string"
+          },
+          "invoiced_estimate_id": {
+            "type": "string"
+          },
+          "salesperson_name": {
+            "type": "string"
+          },
+          "project_id": {
+            "type": "integer"
+          },
+          "line_items": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "item_id": {
+                  "type": "integer"
+                },
+                "project_id": {
+                  "type": "integer"
+                },
+                "time_entry_ids": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                },
+                "expense_id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "product_type": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "item_order": {
+                  "type": "integer"
+                },
+                "rate": {
+                  "type": "integer"
+                },
+                "quantity": {
+                  "type": "integer"
+                },
+                "unit": {
+                  "type": "string"
+                },
+                "discount": {
+                  "type": "integer"
+                },
+                "tax_id": {
+                  "type": "integer"
+                },
+                "tax_name": {
+                  "type": "string"
+                },
+                "tax_type": {
+                  "type": "string"
+                },
+                "tax_percentage": {
+                  "type": "number"
+                },
+                "item_total": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "item_id",
+                "rate",
+                "quantity"
+              ]
+            }
+          },
+          "allow_partial_payments": {
+            "type": "boolean"
+          },
+          "custom_body": {
+            "type": "string"
+          },
+          "custom_subject": {
+            "type": "string"
+          },
+          "notes": {
+            "type": "string"
+          },
+          "terms": {
+            "type": "string"
+          },
+          "shipping_charge": {
+            "type": "integer"
+          },
+          "adjustment": {
+            "type": "integer"
+          },
+          "adjustment_description": {
+            "type": "string"
+          },
+          "reason": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "customer_id",
+          "line_items"
+        ]
+      }
+    },
+    "securitySchemes": {
+      "OAuth2": {
+        "type": "oauth2",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "https://accounts.zoho.com/oauth/v2/auth",
+            "tokenUrl": "https://accounts.zoho.com/oauth/v2/token",
+            "scopes": {
+              "ZohoInvoice.invoices.CREATE": "Create invoices",
+              "ZohoInvoice.invoices.READ": "Read invoices",
+              "ZohoInvoice.invoices.UPDATE": "Update invoices",
+              "ZohoInvoice.invoices.DELETE": "Delete invoices",
+              "offline_access": "Get refresh token"
+            }
+          }
+        },
+        "description": "OAuth token should be present for every request Authorization header, after the prefix Zoho-oauthtoken"
+      }
+    }
+  },
+  "security": [
+    {
+      "OAuth2": []
+    }
+  ]
+}
