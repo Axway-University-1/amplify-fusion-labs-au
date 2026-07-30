@@ -5,7 +5,7 @@ show_repository: false
 owner_name: Axway University
 owner_url: https://university.axway.com
 logo_url: https://avatars.githubusercontent.com/u/5559759
-copyright: 2025 Axway
+copyright: 2026 Axway
 remote_theme: pages-themes/leap-day@v0.2.0
 plugins:
 - jekyll-remote-theme # add this line to the plugins list if you already have one
