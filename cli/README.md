@@ -1,18 +1,17 @@
-# Deployment Lab
+# CLI Lab
 
-In these labs, we will build a very basic project and integration and version and deploy it. We will also exercise some of the versioning and deployment features. At the end of these labs, you will learn the following:
+In these labs, we will install and exercise the CLI leading to running a deployment script which will promote the project from the Deployment Lab to CHECK or LIVE. At the end of these labs, you will learn the following:
 
-* How to version a project
-* How to deploy a project
-* How to override connections
-* How to deploy an updated version of a project
-* How to rollback a deployment
-* How to revert to older version of a project
+* How to install the CLI
+* How to run basic CLI commands
+* How to run a pre built deployment script
 
 ## Pre-requisites
 
 * Access to Amplify Integration
   > If you do not have an account and need one, please send an email to **[amplify-fusion-training@axway.com](mailto:amplify-fusion-training@axway.com?subject=Amplify%20Fusion%20-%20Training%20Environment%20Access%20Request&body=Hi%2C%0D%0A%0D%0ACould%20you%20provide%20me%20with%20access%20to%20an%20environment%20where%20I%20can%20practice%20the%20Amplify%20Fusion%20e-Learning%20labs%20%3F%0D%0A%0D%0ABest%20Regards.%0D%0A)** with the subject line `Amplify Integration Training Environment Access Request`
+* Access to the Amplify Platform at [https://platfom.axway.com](https://platfom.axway.com)
+* Completion of the Deployment Course and Lab
 * Access to curl (or Postman)
 * Completion of the Hello World hands on labs
 * Suitable role to create and run deployment jobs
@@ -51,102 +50,10 @@ Now that our integration is working, let's version it
 ![lab1](images/lab1-create-v1-1.png)
 ![lab1](images/lab1-create-v1-2.png)
 
-## Lab 2
+## Lab 4 - Challenge yourself!
 
-In this lab we'll deploy our project to CHECK so that it can be tested by the QA team.
-
-* Click the History button in your Project and click the three dots next to V1 and select deploy
-![lab2](images/lab2-deploy-version-1.png)
-* Enter a Deployment Job name and description (e.g. deploytest_v1_dj) and click on Create Job
-![lab2](images/lab2-deploy-version-2.png)
-* A new tab will open showing your deployment jobs in the manager module with the deployment job you just created at the top
-![lab2](images/lab2-deploy-version-3.png)
-* Click the Run button under Actions and select CHECK and click Run Now
-![lab2](images/lab2-deploy-version-4.png)
-
-Before we can activate our integration and test it, we need to configure the connection(s) in the project. In this case we have one, the HTTP/S Server connection. We will use the Connection Override feature to accomplish this.
-
-* Switch to the CHECK environment by first closing the Designer tab to make sure you only have one tab open and then click on CHECK in the Environment picker
-![lab2](images/lab2-deploy-version-5.png)
-* Select Environments from the Left menu
-![lab2](images/lab2-deploy-version-6.png)
-![lab2](images/lab2-deploy-version-7.png)
-* Click on the Details icon in the CHECK Environment and then click on Projects
-![lab2](images/lab2-deploy-version-8.png)
-* Click on the Action icon for your project and select the HTTP/S Server Connection and click next
-![lab2](images/lab2-deploy-version-9.png)
-* Click Override and select `HTTPS` for Protocol and `Token` for Authentication and enter `abcde` for the Token and click Update and then click Cancel to dismiss the dialog box
-![lab2](images/lab2-deploy-version-10.png)
-
-Now we can activate the integration and test it.
-
-* Select Events from the Manager Module Menu
-![lab2](images/lab2-deploy-version-11.png)
-* Locate your project and click on the activate button
-![lab2](images/lab2-deploy-version-12.png)
-* Click activate on the Shared Data Plane and copy your url
-![lab2](images/lab2-deploy-version-13.png)
-* Call it using curl as follows:
-  ```bash
-  curl "{YOUR INTEGRATION URL}" --header "Authorization: Bearer abcde"
-  ```
-  The response should be `Hello from V1`
-
-## Lab 3
-
-In this lab we'll update our integration, version it to v2 and deploy it to CHECK. Many of the steps will be a repeat of what we already did in lab 1 and lab 2.
-
-* Deactivate the integration you just activated and tested
-* Switch to the Designer module and switch to DESIGN mode and open your project and integration
-* Edit the HTTP/S Server GET component and set the response to `Hello from V2` and save
-![lab3](images/lab3-deploy-version2-1.png)
-* Test your project and make sure your response is `Hello from V2`
-* Version your project to v2
-![lab3](images/lab3-deploy-version2-2.png)
-* Click the 3 dots next to the version and click Deploy
-* Give you deployment job a name and description (e.g. deploytest_v2_dj)
-![lab3](images/lab3-deploy-version2-3.png)
-* Run your deployment job and select CHECK
-![lab3](images/lab3-deploy-version2-4.png)
-
-* Make sure you have only one tab open and switch to Manager module and CHECK mode
-* Open the Events tab and activate your integration and test it and make sure your response is `Hello from V2`
-
-## Lab 4
-
-In this lab we'll roll back the project in CHECK to v1.
-
-Normally, we'd use rollback in Production (LIVE) but we can also perform rollbacks in CHECK. This simulates a scenario where we discover that we have a defect in production and need to quickly revert to prior version.
-
-* Make sure you only have one tab open and while in CHECK mode, deactivate the integration you just activated
-* Select DESIGN mode, click Deployments and click on History
-![lab3](images/lab4-rollback-version2-1.png)
-* Click on the rollback Action button for your v2 deployment and select your deployment only and click OK
-![lab3](images/lab4-rollback-version2-2.png)
-![lab3](images/lab4-rollback-version2-3.png)
-* Activate your integration and test it and make sure your response is `Hello from V1`
-
-## Lab 5
-
-In this lab we'll revert our project back to v1 in DESIGN, make modifications and then version it to v3 and deploy it to CHECK.
-
-* Deactivate your integration in CHECK
-* Make sure you have only one tab open and switch to Designer module and DESIGN mode
-* Open your project and click on the history icon and click on the 3 dots next to v1
-![lab3](images/lab5-deploy-version3-1.png)
-* Click on Revert to revert to v1
-* Follow the instructions in lab 3 and set your response to `Hello from V3` and test it
-* Refresh your browser tab and click on the history icon and create a new version V3
-![lab3](images/lab5-deploy-version3-2.png)
-![lab3](images/lab5-deploy-version3-3.png)
-* Deploy V3 as we did in lab 3 (e.g. deploytest_v3_dj)
-![lab3](images/lab5-deploy-version3-4.png)
-* Activate your integration in CHECK and test it and make sure your response is `Hello from V3`
-
-## Lab 6 - Challenge yourself!
-
-In this lab, you will deploy your V3 project to LIVE without any instructions.
+In this lab, you will explore connection overrides and add that to the script so that the credentials can be updated through a CI/CD pipeline.
 
 Hints:
-* You do not need to create a new deployment job. You can use the V3 deployment job to deploy to LIVE
-* You will need to perform a Connection Override for your project in LIVE
+* An HTTP Server connection override [export file](https://raw.githubusercontent.com/Axway-University-1/amplify-fusion-labs-au/main/cli/assets/http_server_override.json) and a revised [import file](https://raw.githubusercontent.com/Axway-University-1/amplify-fusion-labs-au/main/cli/assets/http_server_override_modified.json) are provided as examples
+* You need to add two new script inputs for the HTTPS connection Basic auth username and password
