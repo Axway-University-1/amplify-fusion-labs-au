@@ -10,45 +10,66 @@ In these labs, we will install and exercise the CLI leading to running a deploym
 
 * Access to Amplify Integration
   > If you do not have an account and need one, please send an email to **[amplify-fusion-training@axway.com](mailto:amplify-fusion-training@axway.com?subject=Amplify%20Fusion%20-%20Training%20Environment%20Access%20Request&body=Hi%2C%0D%0A%0D%0ACould%20you%20provide%20me%20with%20access%20to%20an%20environment%20where%20I%20can%20practice%20the%20Amplify%20Fusion%20e-Learning%20labs%20%3F%0D%0A%0D%0ABest%20Regards.%0D%0A)** with the subject line `Amplify Integration Training Environment Access Request`
-* Access to the Amplify Platform at [https://platfom.axway.com](https://platfom.axway.com)
+* Access to the CLI in the Amplify Platform Repository at [https://platfom.axway.com](https://platfom.axway.com)
+* Java 25, or later installed
 * Completion of the Deployment Course and Lab
 * Access to curl (or Postman)
 * Completion of the Hello World hands on labs
 * Suitable role to create and run deployment jobs
-  > **Note**: You will need Manager role privileges to create deployment jobs in Design mode and deploy to CHECK and LIVE and activate your integrations in CHECK and LIVE. If you run into permission issues during deployment, please reach out to your environment administrator to update your role accordingly. Full Manager access or Admin access should be sufficient.
+  > **Note**: You will need Manager role privileges to create deployment jobs in Design mode and deploy to CHECK and/or LIVE and activate your integrations in CHECK and/or LIVE. If you run into permission issues during deployment, please reach out to your environment administrator to update your role accordingly. Full Manager access or Admin access should be sufficient.
 
 ## Lab 1
 
-In this lab we'll create, test and version a very basic integration triggered by an HTTP/S Server GET.
+In this lab we'll install the CLI and authenticate
 
-* Create a new Amplify Fusion project for this deployment test. Use a unique name in case you're not the only one doing this lab on your tenant (e.g. XX_deploytest with XX being your name or initials).
-* Create an integration (e.g. test)
-* Add an HTTP/S Server Get for the Event
-![lab1](images/lab1-event-1.png)
-* Click Add to create a new HTTP/S Server Connection (e.g. http server)
-* Select `HTTPS` for Protocol and `Token` for Authentication and enter `12345` for the Token and click Update
-![lab1](images/lab1-httpserver-connection-settings-1.png)
-* Return to the integration and click on the HTTP/S Server Get component and click refresh and select the HTTP/S Server Connection you just created
-* Enter `test` for the Resource Path.
-  > Note that the resource path must be unique for your tenant. Since you are most likely working in a shared environment, you may want to prefix the resource path with your initials to make it unique (e.g. XX_test) \
-![lab1](images/lab1-httpserver-coomponent-settings-1.png)
-  > Note that your Resource Path must be unique for your tenant. You can prefix with your initials to help ensure uniqueness (e.g. `lb_test`)
-* Click on Response and set Body to `Hello from V1`, set Content Type to `text/plain`, check `Send Response before flow execution` and click Save
-![lab1](images/lab1-httpserver-coomponent-settings-2.png)
-* Activate your integration and copy your URL and call it using curl as follows:
-![lab1](images/lab1-url-1.png)
+* Log into the Axway Platform at https://platform.axway.com and click on Repository and click Browse all
+
+  ![lab1](images/platform-home.png)
+  ![lab1](images/repository.png)
+
+* Under Type, scroll down to products and select Amplify Fusion and optionally a version​
+
+  ![lab1](images/filter-fusion.png)
+
+* Search for CLI to see download options and select the JAR Library​
+
+  ![lab1](images/search-for-cli.png)
+  ![lab1](images/select-jar-lib.png)
+
+* Change directory to the directory where the JAR file downlaoded to and run the CLI using `java -jar fusion-cli-{VERSION}-runner.jar --version`
+
+  > NOTE: Replace {VERSION} with the downloaded version (e.g. 1.0.0)
+
+* Optionally set an alias to the downloaded JAR file using `alias fusion="java -jar /path/to/fusion-cli-{VERSION}-runner.jar"`
+
+  > NOTE: Replace with the path to the CLI JAR file you just downloaded (e.g. `alias fusion="java -jar /Users/leorbrenman/Downloads/fusion-cli-1.0.0-runner.jar"`)
+
+  * Change directory to another directory that DOES NOT contain the CLI and test the alias using `fusion --version`
+
+* Login using `fusion auth login --url https://<your-tenant-url>` (e.g. `fusion auth login --url https://axway-appc-se.sandbox.fusion.services.axway.com/`)
+
+  > NOTE: On success, you should see a message like this `Welcome Leor Brenman GM!. You are now set to use Amplify Fusion operations.`
+
+* Run whoami using `fusion auth whoami` to see a respoinse similar to below:
+
   ```bash
-  curl "{YOUR INTEGRATION URL}" --header "Authorization: Bearer 12345"
+  First Name          : Leor
+  Last Name           : Brenman GM
+  Email               : leor.brenman@gmail.com
+  Status              : ACTIVE
+  Organization Name   : Axway Appcelerator SE
+  Tenant Name         : axway-appc-se
+  Preferred teams     : Default Team
+  All teams           : Default Team
+  Default Mode        : DESIGN
+  Administrator       : false
+  Team Administrator  : false
+  Super Administrator : true
   ```
-  The response should be `Hello from V1`
 
-Now that our integration is working, let's version it
+## Lab 2
 
-* Deactivate the integration
-* Click the History button in your Project and click Create New Version
-* Enter a version description (e.g. initial commit) and click Save
-![lab1](images/lab1-create-v1-1.png)
-![lab1](images/lab1-create-v1-2.png)
+
 
 ## Lab 4 - Challenge yourself!
 
