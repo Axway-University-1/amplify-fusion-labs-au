@@ -4,7 +4,7 @@ In these labs, we will install and exercise the CLI leading to running a deploym
 
 * How to install the CLI
 * How to run basic CLI commands
-* How to run a pre built deployment script
+* How to create and run a deployment script
 
 Note that the same user can only be logged in once so that when you authenticate with the CLI, your UI session will end and vice versa.
 
@@ -16,7 +16,6 @@ Note that the same user can only be logged in once so that when you authenticate
 * Java 25, or later installed
 * Completion of the Deployment Course and Lab
 * Access to curl (or Postman)
-* Completion of the Hello World hands on labs
 * Suitable role to create and run deployment jobs
   > **Note**: You will need Manager role privileges to create deployment jobs in Design mode and deploy to CHECK and/or LIVE and activate your integrations in CHECK and/or LIVE. If you run into permission issues during deployment, please reach out to your environment administrator to update your role accordingly. Full Manager access or Admin access should be sufficient.
 
