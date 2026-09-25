@@ -12,9 +12,9 @@ Note that the same user can only be logged in once so that when you authenticate
 
 * Access to Amplify Integration
   > If you do not have an account and need one, please send an email to **[amplify-fusion-training@axway.com](mailto:amplify-fusion-training@axway.com?subject=Amplify%20Fusion%20-%20Training%20Environment%20Access%20Request&body=Hi%2C%0D%0A%0D%0ACould%20you%20provide%20me%20with%20access%20to%20an%20environment%20where%20I%20can%20practice%20the%20Amplify%20Fusion%20e-Learning%20labs%20%3F%0D%0A%0D%0ABest%20Regards.%0D%0A)** with the subject line `Amplify Integration Training Environment Access Request`
-* Access to the CLI in the Amplify Platform Repository at [https://platfom.axway.com](https://platfom.axway.com)
+* Access to the CLI in the Amplify Platform Repository at [https://platform.axway.com](https://platfom.axway.com)
 * Java 25, or later installed
-* Completion of the Deployment Course and Lab
+* Completion of the Axway University [Amplify Fusion Deployment Course and Lab](https://university.axway.com/learn/courses/14087/amplify-fusion-api-management/lessons/32676/introduction-afapim01)
 * Access to curl (or Postman)
 * Suitable role to create and run deployment jobs
   > **Note**: You will need Manager role privileges to create deployment jobs in Design mode and deploy to CHECK and/or LIVE and activate your integrations in CHECK and/or LIVE. If you run into permission issues during deployment, please reach out to your environment administrator to update your role accordingly. Full Manager access or Admin access should be sufficient.
@@ -116,6 +116,7 @@ At this point, you now know most if not all of the commands used in a deployment
 * Log into the Fusion UI and create a new version of the deployment job integration and version it and note the project name, integration name, version and data plane name
 
 * Run the deployment script using `./deployment_script_simple.sh` and enter your login credentials, project name, integration name, ...
+  * For version, provide the full version (e.g. V17) and not just the number (e.g. 17)
 
 * Test the new version of your integration in the target environment
 
