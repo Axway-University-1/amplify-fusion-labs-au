@@ -107,6 +107,8 @@ At this point, you now know most if not all of the commands used in a deployment
 
 ## Lab 3 - Deployment Script
 
+In this lab we will modify and run a deployment script that will use the CLI to promote a versioned project to a hogher environment and activate the project's integration just as you did manually in the Deployment Lab.
+
 * Download the deployment script example [here](https://raw.githubusercontent.com/Axway-University-1/amplify-fusion-labs-au/main/cli/assets/deployment_script_simple.sh)
 
 * Make it executable using `chmod +x deployment_script_simple.sh`
