@@ -1,6 +1,6 @@
 # CLI Lab
 
-In these labs, we will install and exercise the CLI leading to running a deployment script which will promote the project from the Deployment Lab to CHECK or LIVE. At the end of these labs, you will learn the following:
+In these labs, we will install and exercise the CLI leading to a deployment script which will promote the project from the Deployment Lab to CHECK or LIVE. At the end of these labs, you will learn the following:
 
 * How to install the CLI
 * How to run basic CLI commands
