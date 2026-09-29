@@ -1,0 +1,87 @@
+openapi: 3.0.3
+info:
+  title: Employee Directory API
+  description: >
+    Northwind's internal Employee Directory API. Exposes read-only lookups of
+    employee records (name, title, department, contact details). Because the
+    data is sensitive, this API is protected with OAuth 2.0 (see the Keycloak
+    OAuth lab).
+  version: 1.0.0
+paths:
+  /employees:
+    get:
+      operationId: getEmployees
+      summary: List employees
+      description: Returns the list of employees in the directory.
+      parameters:
+        - name: department
+          in: query
+          required: false
+          description: Optional filter to return only employees in a given department.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A list of employees.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  employees:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Employee'
+        '401':
+          description: Missing or invalid access token.
+  /employees/{id}:
+    get:
+      operationId: getEmployeeById
+      summary: Get an employee by id
+      description: Returns a single employee's details.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The unique employee id.
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: The requested employee.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Employee'
+        '401':
+          description: Missing or invalid access token.
+        '404':
+          description: No employee found with the given id.
+components:
+  schemas:
+    Employee:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        firstName:
+          type: string
+          example: Test
+        lastName:
+          type: string
+          example: User
+        title:
+          type: string
+          example: Software Engineer
+        department:
+          type: string
+          example: Engineering
+        email:
+          type: string
+          example: testuser@axway.com
+        phone:
+          type: string
+          example: "412-297-3188"

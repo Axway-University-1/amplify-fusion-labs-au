@@ -57,7 +57,7 @@ In this set of labs, you will learn the following:
 
 ## Prerequisites
 
-- A running **Keycloak** instance with administrator access. Please note that installation of Keycloak is not covered in this lab.
+- A running **Keycloak** instance with administrator access. Please note that installation of Keycloak is not covered in this lab. You could use a this repo if you do not want to install Keycloak and use github codespace. The requirement is a github account. 
 - Access to Amplify Fusion
 If you do not have an account and need one, please send an email to amplify-fusion-training@axway.com with the subject line Amplify Integration Training Environment Access Request
 - The sample OpenAPI specification **`EmployeeDirectoryAPI-OAS.yaml`** (saved next to this document) used to create the API in Lab 2
@@ -117,14 +117,7 @@ Make sure the realm selector now shows `fusion` before continuing - every step f
    - `https://oauth.pstmn.io/v1/callback` as we will be using Postman to call our API
 2. Click **Save**
 
-### Step 5 - Copy the client secret
-
-1. Go to the **Credentials** tab
-2. Copy the **Client secret** — you will need it for Postman in Lab 3
-
-<img src="images/lab1-07-client-credentials.png" alt="Client credentials - copy secret" width="50%">
-
-### Step 6 - Create a test user
+### Step 5 - Create a test user
 
 <img src="images/lab1-08-create-user.png" alt="Create user" width="50%">
 
@@ -141,7 +134,7 @@ Make sure the realm selector now shows `fusion` before continuing - every step f
 
 > **Important - avoid a broken login flow:** Fill in the full profile (email, first name, last name) and mark the email verified. If any of these are missing, Keycloak forces an **Update Profile** screen during login, which interrupts Postman's Authorization Code flow so no token is ever returned.
 
-### Step 7 - Set the user's password
+### Step 6 - Set the user's password
 
 1. On the user's page, open the **Credentials** tab and click **Set password**
 2. Enter a password (for example `Test1234`)
@@ -387,7 +380,6 @@ In your request's **Authorization** tab, set **Type** to **OAuth 2.0**, then und
 | Auth URL | `https://<hostname>/realms/fusion/protocol/openid-connect/auth` |
 | Access Token URL | `https://<hostname>/realms/fusion/protocol/openid-connect/token` |
 | Client ID | `fusion_api` |
-| Client Secret | *(the secret copied in Lab 1, Step 6)* |
 | Client Authentication | Send as Basic Auth header |
 | Scope | `openid` |
 
