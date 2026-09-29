@@ -57,7 +57,7 @@ In this set of labs, you will learn the following:
 
 ## Prerequisites
 
-- A running **Keycloak** instance with administrator access. Please note that installation of Keycloak is not covered in this lab. You could use a this repo if you do not want to install Keycloak and use github codespace. The requirement is a github account. 
+- A running **Keycloak** instance with administrator access. Please note that installation of Keycloak is not covered in this lab. You could use a this [repo](https://github.com/lbrenman/keycloak-dev-codespace) if you do not want to install Keycloak and use github codespace. The requirement is a github account. 
 - Access to Amplify Fusion
 If you do not have an account and need one, please send an email to amplify-fusion-training@axway.com with the subject line Amplify Integration Training Environment Access Request
 - The sample OpenAPI specification **`EmployeeDirectoryAPI-OAS.yaml`** (saved next to this document) used to create the API in Lab 2
