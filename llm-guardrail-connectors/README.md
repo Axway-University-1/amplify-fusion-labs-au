@@ -17,7 +17,7 @@ In this set of labs, you will learn the following:
   > If you do not have an account and need one, please send an email to **[amplify-fusion-training@axway.com](mailto:amplify-fusion-training@axway.com?subject=Amplify%20Fusion%20-%20Training%20Environment%20Access%20Request&body=Hi%2C%0D%0A%0D%0ACould%20you%20provide%20me%20with%20access%20to%20an%20environment%20where%20I%20can%20practice%20the%20Amplify%20Fusion%20e-Learning%20labs%20%3F%0D%0A%0D%0ABest%20Regards.%0D%0A)** with the subject line `Amplify Fusion Training Environment Access Request`
 
 * API Keys for the Groq LLM and Lakera Guardrail
-  * As of the writing of this lab, you could get a free [Groq](https://groq.com/) account for testing purposes at [https://groq.com/groqcloud](https://groq.com/groqcloud). The free Groq API key can be used with the OpenAI conentor for accessing Groq LLMs as Groq provides an OpenAI-compatible API
+  * As of the writing of this lab, you could get a free [Groq](https://groq.com/) account for testing purposes at [https://groq.com/groqcloud](https://groq.com/groqcloud). The free Groq API key can be used with the OpenAI connector for accessing Groq LLMs as Groq provides an OpenAI-compatible API
   * As of the writing of this lab, you could get a Lakera community account for free for testing purposes at [https://www.lakera.ai/lakera-guard](https://www.lakera.ai/lakera-guard)
 
 * Postman or curl to make REST API calls
@@ -27,6 +27,7 @@ In this set of labs, you will learn the following:
 NOTES:
 * Use labels on your components
 * Prefix your project name and API Frontend Base Path with your initials when in a shared lab setting
+* At the time of writing, this lab used Groq LLM model `llama-3.1-8b-instant`. LLM vendors deprecate models often and now `llama-3.1-8b-instant` is deprecated. Replace `llama-3.1-8b-instant` with `openai/gpt-oss-20b`. You can find all Groq supported models [here](https://console.groq.com/docs/models) in case `openai/gpt-oss-20b` becomes deprecated
 
 ## Lab 1
 
@@ -163,7 +164,7 @@ Now let's add an OpenAI LLM Connector.
 
 * In order to use the OpenAI Connector with Groq, the Endpoint URL needs to change from the OpenAI Endpoint URL of `https://api.openai.com/v1` to Groq's Endpoint URL of `https://api.groq.com/openai/v1`
 
-* Enter a Groq model such as `llama-3.1-8b-instant`
+* Enter a Groq model such as `openai/gpt-oss-20b` even though screen shot shows `llama-3.1-8b-instant`. See NOTES in the Prerequisites section above.
 
 * Enter your Groq API Key wich you can get from the [Groq web site](https://console.groq.com/keys) after signing up for free if you don't already have one
 
@@ -173,7 +174,7 @@ Now let's add an OpenAI LLM Connector.
 * Click on the Cost & Billing tab and enter 0.05 per 13M input tokens and 0.08 per 13M output tokens as per the Groq [model card](https://console.groq.com/docs/model/llama-3.1-8b-instant) for `llama-3.1-8b-instant` and click udate. This will be used for governance and cost monitoring
   ![image](images/lab2_step11.png)
 
-* Close the connector sub tab and click the refresh button in the Conenction picker in the OpenAI component in your integration and select the `OpenAI-Grok` connector you just configured
+* Close the connector sub tab and click the refresh button in the Connection picker in the OpenAI component in your integration and select the `OpenAI-Grok` connector you just configured
   ![image](images/lab2_step12.png)
 
 * Expand the ACTION PROPERTIES `OpenAIChatInput` and `OpenAIChatOutput` to expose the prompt->text and messages[]->text properties and expand the Pipe-out `chatCompleteAPIServerResponse->200` headers and body properties to expose `Content-Type` and `body->response`
@@ -232,7 +233,7 @@ In this lab we'll add a Guardrail to ensure that unwanted messages do not reach 
 * If you don't have a Lakera Guard API Key you can click on the Generate API Key button in the connector sign up or login and create an API Key. Enter your API Key, click Update and click Test
   ![image](images/lab3_step05.png)
 
-* Close the connector sub tab and click the refresh button in the Conenction picker in the Lakera AI Guard component in your integration and select the `Lakera` connector you just configured
+* Close the connector sub tab and click the refresh button in the Connection picker in the Lakera AI Guard component in your integration and select the `Lakera` connector you just configured
   ![image](images/lab3_step06.png)
 
 * Expand the Pipe-In `chatCompleteAPIServerRequest` and ACTION PROPERTIES `LakeraAIGuardInvokeInput` and do the following:
