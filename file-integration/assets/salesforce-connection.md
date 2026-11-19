@@ -24,78 +24,74 @@
 - Open the **Setup** menu. \
   ![salesforce07](salesforce-connection/salesforce07.png)
 
-- Under **Apps**, click on **App Manager** and click **New External Client  App** for creating a new app \
-  ![salesforce08](salesforce-connection/salesforce09.png).
+- Under **Apps**, click on **App Manager** and click **New External Client App** for creating a new app \
+  ![salesforce09](salesforce-connection/salesforce09.png).
 
 - Fill up the required fields in the **Basic Information** \
   ![salesforce10](salesforce-connection/salesforce10.png)
 
 - Enable **OAuth Settings** should be checked and
-  - Enter the **Callback URLs**. For example, if your Amplify Studio URL is  `https://axway-university.integration.us.axway.com`, your callback URL to generate tokens will be `https://axway-university.integration.us.axway.com/design/oauth2/callback`.
-  - Choose the following scopes in the **Available OAuth Scopes** and **Add** them to the **Selecected OAuth Scopes** .
+  - Enter the **Callback URLs**. For example, if your Amplify Studio URL is  `https://training.sandbox.fusion.services.axway.com`, your callback URL to generate tokens will be `https://training.sandbox.fusion.services.axway.com/design/oauth2/callback`.
+  - Choose the following scopes in the **Available OAuth Scopes** and **Add** them to the **Selected OAuth Scopes** .
     - Full access (full)
     - Manage user data via APIs (api)
     - Perform requests at any time (refresh_token, offline_access)
   
 
   ![salesforce11](salesforce-connection/salesforce11.png)
- ![salesforce11.1](salesforce-connection/salesforce11.1.png)
+
 
 - Enable **Enable Authorization Code and Credentials Flow**
-- Enable **Enable Device Flow**
-- Enable **Enable Token Exchange Flow**
-- Enable **Require secret for Token exchange Flow**
-
 
 In the security field
 - Enable **Require secret for Web Server Flow**
 - Enable **Require secret for Refresh Token Flow**
-- Disable **Require Proof Key for Code Exchange (PKCE) extension for Supported Authorization Flows**
-- Enable **Enable Refresh Token Rotation**
 
 - Click on **Create** 
 
     ![salesforce11.3](salesforce-connection/salesforce11.3.png)
 
- - Click on **Settings tab**
- - Scroll down and open OAuth Settings
- -  Click on **ConsumerKey and Secret**
+- Click on **Settings tab**
+- Scroll down and open OAuth Settings
+- Click on **ConsumerKey and Secret**
 
   ![salesforce12](salesforce-connection/salesforce12.png)
     ![salesforce12.1](salesforce-connection/salesforce12.1.png)
     
--  A new tab will ask you to verify your idenity by asking you to enter the verification code sent to your email. Once you enter the code, you will be able to see the Consumer Key and Consumer Secret, which you need to save for later use in Amplify Fusion connection configuration. 
+-  A new tab will ask you to verify your identity by asking you to enter the verification code sent to your email. Once you enter the code, you will be able to see the Consumer Key and Consumer Secret, which you need to save for later use in Amplify Fusion connection configuration. 
   
 ![salesforce12.2](salesforce-connection/salesforce12.2.png)
 
 ## Amplify Fusion Setup
 
-You must configure a Salesforce Connection to connect Amplify Fusion to your Salesforce instance .
+You must configure a Salesforce Connection to connect Amplify Fusion to your Salesforce instance.
 
-- From Amplify Studio, Navigate to **New** in the top right corner. \
+- From Amplify Studio, click on the + symbol next to connections. \
 ![salesforce13](salesforce-connection/salesforce13.png)
 
-- Select the **Connections** tab from the left side menu, choose the **Salesforce** connection and then click **Next**. \
+- Select **Connections** from the left side menu, choose the **Salesforce** connection and then click **Next**. \
 ![salesforce14](salesforce-connection/salesforce14.png)
 
 - Enter the **Name**, **Description**, select the **Project** and then click **Create**. \
 ![salesforce15](salesforce-connection/salesforce15.png)
 
 - To configure the connection, enter the following details:\
-![salesforce16](salesforce-connection/salesforce16.png)
+![salesforce16.1](salesforce-connection/salesforce16.1.png)
 
-  - Connection Type: **OAuth2.0** 
+  - Connection Type: **OAuth 2.0 + PKCE**. This is required because Salesforce now enforces the PKCE extension for the Authorization Code flow on all External Client Apps.
 
   - Base URL:  **https://{subdomain}.my.salesforce.com/services/data/v{version}**. Replace your {subdomain} and {version} as follow: 
 
-    - Subdomain: You can get your domain by clicking on the Avatar on the top right corner of Salesforce application and copy what comes before ".my.saleforce.com"
+    - Subdomain: You can get your domain by clicking on the avatar on the top right corner of Salesforce application and copy **everything** that comes before ".my.salesforce.com" — including any extra segment such as `.develop` (common on Developer Edition / scratch orgs provisioned via org farm, e.g. `orgfarm-xxxxxxxxxx-dev-ed.develop`). 
       ![salesforce17](salesforce-connection/salesforce17.png)
 
-    - Version: 60.0.  You can get the available API versions by calling the service <https://{subdomain}.my.salesforce.com/services/data> in your browser.
+    - Version: Use the full version number including the decimal, e.g. **60.0** — the path must be `v60.0`. You can get the available API versions by calling the service <https://{subdomain}.my.salesforce.com/services/data> in your browser.
 
   - ClientID: Paste the Consumer Key of the Salesforce app
 
   - Client Secret: Paste the Consumer Secret of the Salesforce app, which will be saved in the encrypted format.
+
+  - Code Challenge Method: automatically set to **SHA-256** by Amplify Fusion for the PKCE flow — no action needed.
 
 - After entering the above details, click **Update** to save the connection details.
 
