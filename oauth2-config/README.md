@@ -69,7 +69,7 @@ If you do not have an account and need one, please send an email to amplify-fusi
 
 In this lab, we will prepare Keycloak so it can issue tokens for our API: a dedicated realm, a confidential OpenID Connect client, and a login-ready test user.
 
-### Step 1 - Log in to the Keycloak Admin Console
+#### Step 1 - Log in to the Keycloak Admin Console
 
 Open your Keycloak URL and sign in to the Admin Console with your administrator credentials.
 
@@ -77,7 +77,7 @@ Open your Keycloak URL and sign in to the Admin Console with your administrator 
 
 <img src="images/lab1-01-keycloak-login.png" alt="Log in to Keycloak" width="50%">
 
-### Step 2 - Create the `fusion` realm
+#### Step 2 - Create the `fusion` realm
 
 The `master` realm is reserved for administering Keycloak itself, so we create a separate realm for API access.
 
@@ -92,7 +92,7 @@ The `master` realm is reserved for administering Keycloak itself, so we create a
 
 Make sure the realm selector now shows `fusion` before continuing - every step from here happens inside the `fusion` realm, not `master`.
 
-### Step 3 - Create the `fusion_api` client (General settings)
+#### Step 3 - Create the `fusion_api` client (General settings)
 
 1. In the left menu, go to **Clients** and click **Create client**
 2. **Client type**: `OpenID Connect`
@@ -111,14 +111,14 @@ Make sure the realm selector now shows `fusion` before continuing - every step f
 
 <img src="images/lab1-05-create-client-capability.png" alt="Create client - Capability config" width="50%">
 
-### Step 4 - Configure login settings
+#### Step 4 - Configure login settings
 
 1. Set **Valid redirect URIs** to Postman's OAuth callback:
    - `https://oauth.pstmn.io/v1/callback` as we will be using Postman to call our API
 2. Click **Save**
 3. Click on the Credentials tab and copy the `Client Secret`.
 
-### Step 5 - Create a test user
+#### Step 5 - Create a test user
 
 <img src="images/lab1-08-create-user.png" alt="Create user" width="50%">
 
@@ -135,7 +135,7 @@ Make sure the realm selector now shows `fusion` before continuing - every step f
 
 > **Important - avoid a broken login flow:** Fill in the full profile (email, first name, last name) and mark the email verified. If any of these are missing, Keycloak forces an **Update Profile** screen during login, which interrupts Postman's Authorization Code flow so no token is ever returned.
 
-### Step 6 - Set the user's password
+#### Step 6 - Set the user's password
 
 1. On the user's page, open the **Credentials** tab and click **Set password**
 2. Enter a password (for example `Test1234`)
@@ -156,17 +156,17 @@ In this lab, we will create the Employee Directory API in Fusion Designer by imp
 
 You will import this OAS file (saved next to this document): **`EmployeeDirectoryAPI-OAS.yaml`**. It defines the two read operations from our use case (`GET /employees` and `GET /employees/{id}`).
 
-### Step 1 - Create a Fusion project
+#### Step 1 - Create a Fusion project
 
 Create a new Amplify Fusion project for this lab. Use a unique name if you share the tenant with others (for example `XX_EmployeeDirectory`, where `XX` is your initials). Provide a meaningful description. Choose Project Type as Fusion. 
 
 <img src="images/lab2-01-create-project.png" alt="Create a Fusion project" width="30%">
 
-### Step 2 - Create a new API
+#### Step 2 - Create a new API
 
 In your project, click the **+** symbol next to API to start creating a new API.
 
-### Step 3 - Import the OpenAPI specification
+#### Step 3 - Import the OpenAPI specification
 
 1. Give the API a name (for example `EmployeeDirectoryAPI`)
 2. Upload the OpenAPI specification [`EmployeeDirectoryAPI-OAS.yaml`](EmployeeDirectoryAPI-OAS.yaml)
@@ -174,12 +174,12 @@ In your project, click the **+** symbol next to API to start creating a new API.
 
 <img src="images/lab2-03-upload-oas.png" alt="Upload the OpenAPI specification" width="30%">
 
-### Step 4 - Finish creating the API
+#### Step 4 - Finish creating the API
 
 1. Leave the **Backend Server URL** blank (our integration produces the response, so there is no backend to proxy to)
 2. Click **Create**
 
-### Step 5 - Set the API Frontend Base Path
+#### Step 5 - Set the API Frontend Base Path
 
 Open the API **Configuration** dialog and, on the **General** tab, set a unique **Frontend Base Path** (for example `/XX_employees`) and click **Save**. This base path becomes part of the URL you will call later.
 
@@ -187,7 +187,7 @@ Leave **Backend Connection** empty (our integration produces the response, so th
 
 <img src="images/lab2-05-frontend-base-path.png" alt="Set the frontend base path" width="20%">
 
-### Step 6 - Link an integration to `GET /employees`
+#### Step 6 - Link an integration to `GET /employees`
 
 1. For the **`GET /employees`** endpoint, click the **link integration** button on the right side of the method title. Then click on ***Create New Integration***
 2. Type a name for the new integration (for example `GetEmployees`) and click **LinkIntegration**
@@ -196,7 +196,7 @@ Leave **Backend Connection** empty (our integration produces the response, so th
 
 <img src="images/lab2-06-link-integration1.png" alt="Link an integration1 to GET /employees" width="20%">
 
-### Step 7 - Set a response
+#### Step 7 - Set a response
 
 The integration tab opens automatically. For this lab we return a simple, static response so the API works end to end before we add security. We do this with a **Map** component that sets values directly on the API response. (You can later replace this with a database or backend lookup)
 
@@ -231,7 +231,7 @@ The integration tab opens automatically. For this lab we return a simple, static
 
 Close the Map component by clicking on the **X** button.
 
-### Step 8 - Enable and test the API
+#### Step 8 - Enable and test the API
 
 Click on the API description and activate the API by clicking on the **Activate** button. Copy the URL of the API, which you will use to call the API from Postman.
 
@@ -251,7 +251,7 @@ Use the URL with the method name (`employees`) appended at the end. You should g
 
 In this lab, we will create an **Identity Provider** in Fusion that validates Keycloak JWTs, apply it to the API as inbound OAuth 2.0 security, and register a Consumer Application so Fusion trusts the client id in the token.
 
-### Step 1 - Get the endpoint values from Keycloak's OpenID Endpoint Configuration
+#### Step 1 - Get the endpoint values from Keycloak's OpenID Endpoint Configuration
 
 Before configuring Fusion, gather the OAuth/OIDC endpoint URLs that the `fusion` realm publishes. Keycloak exposes these in its **OpenID Endpoint Configuration** (the OIDC discovery document).
 
@@ -271,7 +271,7 @@ From that JSON, note the following values (for the `fusion` realm they follow th
 
 > **Tip:** Replace `<hostname>` and the realm name with your own values. Reading them from the discovery doc (rather than hand-building the URLs) avoids typos and picks up any non-standard paths your Keycloak might use.
 
-### Step 2 - Create the Identity Provider in the Manager module
+#### Step 2 - Create the Identity Provider in the Manager module
 
 Fusion validates incoming tokens against an **Identity Provider** definition. We create one for our Keycloak `fusion` realm.
 
@@ -296,7 +296,7 @@ Under **JWT Token Validation**, using the values from Step 1:
 
 > **Important - change the claim defaults (`cid`/`scp`):** This screen pre-fills **Client Id Claim** with **`cid`** and **Scope Claim** with **`scp`**. Keycloak does **not** use those names — it puts the client id in **`azp`** and the scopes in **`scope`**. If you leave the defaults, Fusion looks for claims that do not exist in the token, never finds a client id to match, and rejects every request with a **401**. Change them to `azp` and `scope`.
 
-### Step 3 - Add the OAuth 2.0 Flow
+#### Step 3 - Add the OAuth 2.0 Flow
 
 Still on the Identity Provider form, under **OAuth 2.0 Flows**, add the Authorization Code flow using the URLs from Step 1:
 
@@ -310,7 +310,7 @@ Still on the Identity Provider form, under **OAuth 2.0 Flows**, add the Authoriz
 
 > **Important - use the `fusion` realm, not `master`:** Make sure these URLs contain `/realms/fusion/`. The `master` realm is for administering Keycloak itself; issuing API tokens from it would mix admin accounts with API access.
 
-### Step 4 - Set inbound security and create the Governance Rule
+#### Step 4 - Set inbound security and create the Governance Rule
 
 Go back to the Designer and diable the API if you have enabled it. Then in the API's **Security** tab uses a **Governance Rule** for inbound security. The Governance Rule references the Identity Provider we created in Steps 2-3.
 
@@ -333,7 +333,7 @@ Go back to the Designer and diable the API if you have enabled it. Then in the A
 
 > **Note:** If the API is currently enabled, you may need to disable it before changing security, then re-enable it in Step 7.
 
-### Step 5 - Configure required scopes
+#### Step 5 - Configure required scopes
 
 On the same **Security** tab, use **Configure Scopes** → **+ Add scope** to require a scope on the token.
 
@@ -343,7 +343,7 @@ On the same **Security** tab, use **Configure Scopes** → **+ Add scope** to re
 
 > **Note - required scopes must actually be in the token:** Adding `openid` here means the token's `scope` claim must include `openid`, otherwise the call is rejected. Configuring the scope in Fusion does **not** make Keycloak grant it — the client has to *request* it. We handle this in Lab 4 by setting Postman's **Scope** field to `openid`. If you would rather accept any validly signed token from this realm, leave Configure Scopes empty instead.
 
-### Step 6 - Register a Consumer Application
+#### Step 6 - Register a Consumer Application
 
 Fusion matches the client id in the token against a registered Consumer Application.
 
@@ -358,7 +358,7 @@ Fusion matches the client id in the token against a registered Consumer Applicat
 
 <img src="images/lab3-08-consumer-application-oauth.png" alt="Consumer application oauth" width="50%">
 
-### Step 7 - Activate / deploy the API
+#### Step 7 - Activate / deploy the API
 
 Activate the API (or re-activate it) on your data plane so the new security configuration takes effect.
 
@@ -370,7 +370,7 @@ At the end of Lab 3, the API requires a valid Keycloak JWT: the signature must v
 
 In this lab, we will obtain an access token from Keycloak using the Authorization Code flow and call the protected API.
 
-### Step 1 - Configure the OAuth 2.0 request in Postman
+#### Step 1 - Configure the OAuth 2.0 request in Postman
 
 In your request's **Authorization** tab, set **Type** to **OAuth 2.0**, then under **Configure New Token** enter:
 
@@ -389,14 +389,14 @@ In your request's **Authorization** tab, set **Type** to **OAuth 2.0**, then und
 
 > **Important - set the Scope field to `openid`:** Keycloak only includes scopes in the token that were explicitly requested. If you leave Postman's **Scope** field blank, Keycloak grants only its defaults (`profile email`) and the token's `scope` claim will not contain `openid` — which fails the requirement you set in Lab 3, Step 5. Enter `openid` here so the issued token carries it.
 
-### Step 2 - Get a new access token and log in
+#### Step 2 - Get a new access token and log in
 
 1. Click **Get New Access Token**
 2. Keycloak's login page opens — sign in as `testuser` with the password you set in Lab 1 (Test1234)
 
 <img src="images/lab4-02-keycloak-login-prompt.png" alt="Keycloak login prompt" width="30%">
 
-### Step 3 - Inspect the token
+#### Step 3 - Inspect the token
 
 After login, Postman receives the token. Inspect it (for example at [jwt.io](https://jwt.io)) and confirm:
 
@@ -404,7 +404,7 @@ After login, Postman receives the token. Inspect it (for example at [jwt.io](htt
 - `scope` includes `openid` (for example `"scope": "openid profile email"`)
 - `iss` is `https://<hostname>/realms/fusion`
 
-### Step 4 - Call the protected API
+#### Step 4 - Call the protected API
 1. Use the token as the request's Bearer token (Postman does this automatically once the token is active)
 2. Send the request to the Employee Directory API's `GET /employees` endpoint (the URL from Lab 2, Step 8, with `/employees` appended)
 3. You should receive a **200 OK** response with the employee data

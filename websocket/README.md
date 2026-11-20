@@ -55,32 +55,32 @@ In this lab, you will learn the following:
 
 In this lab, we create a Fusion project and a new API whose frontend protocol is WebSocket instead of HTTP/REST, then prove out the simplest possible WebSocket round trip: take whatever text a client sends, stick `Axway University` onto the end of it with a **Concat** function, and send that back.
 
-### Step 1 - Create a Fusion project
+#### Step 1 - Create a Fusion project
 
 Create a new Amplify Fusion project for this lab. Use a unique name if you share the tenant with others (for example `XX_VoiceAssistant`, where `XX` is your initials). Choose **Project Type** as Fusion.
 
 <img src="images/ws-lab1-01-create-project.png" alt="Create a Fusion project" width="50%">
 
-### Step 2 - Create a new WebSocket API
+#### Step 2 - Create a new WebSocket API
 
 1. In your project, click the **+** symbol next to WebSocket
 2. Give it a name, for example `VoiceAssistantAPI`
 
 <img src="images/ws-lab1-02-create-websocket-api.png" alt="Create a new WebSocket API" width="50%">
 
-### Step 3 - Set the frontend base path
+#### Step 3 - Set the frontend base path
 
 Open the API **Configuration** dialog and set a unique **Frontend Base Path**, for example `/XX_websocket`. This base path becomes part of the WebSocket URL you will connect to later (for example `wss://<your-data-plane-host>/XX_websocket`).
 
 <img src="images/ws-lab1-03-frontend-base-path.png" alt="Set the frontend base path" width="80%">
 
-### Step 4 - Define the operation
+#### Step 4 - Define the operation
 
 Click **+ Add Path** and add a single operation for the connection, for example `/assistant`, which represents the path clients connect to.
 
 <img src="images/ws-lab1-04-define-operation.png" alt="Define the WebSocket operation" width="50%">
 
-### Step 5 - Link an integration and add a Map component
+#### Step 5 - Link an integration and add a Map component
 
 1. On the operation, click the **link integration** button and choose **Create New Integration**
 
@@ -95,7 +95,7 @@ Click **+ Add Path** and add a single operation for the connection, for example 
 
 <img src="images/ws-lab1-05-concat-canvas.png" alt="WebSocket Invoke connected to a Map component" width="70%">
 
-### Step 6 - Build the Concat mapping
+#### Step 6 - Build the Concat mapping
 
 1. Click on the Map component and maximize it to open the mapping panel
 2. On the right-hand side, click **+ fx** next to `WebSocketServerResponse` and search for the **Concat** function under String.
@@ -106,7 +106,7 @@ Click **+ Add Path** and add a single operation for the connection, for example 
 
 <img src="images/ws-lab1-06-concat-map-config.png" alt="Map component concatenating textMessage with Axway University" width="70%">
 
-### Step 7 - Enable and test
+#### Step 7 - Enable and test
 
 Go back to the WebSocket definition. Test it with Postman:
 
@@ -134,7 +134,7 @@ In this lab, we create the two Mistral AI connections the integration will call 
 
 > Need a Mistral account and API key first? See the [Mistral account setup guide](mistral-account-setup.md).
 
-### Step 1 - Set up the new path
+#### Step 1 - Set up the new path
 
 1. Deactivate the existing WebSocket that was activated earlier.
 2. Add a new path and call it **/voiceassistant**
@@ -142,7 +142,7 @@ In this lab, we create the two Mistral AI connections the integration will call 
 
 Add label to WebSocket Invoke as Invoke WebSocket.
 
-### Step 2 - Branch on whether the message is binary
+#### Step 2 - Branch on whether the message is binary
 
 Immediately after the trigger (`WebSocket... Invoke`), add an **If-else** component labeled `Is it Binary`, with a condition expression that checks whether the inbound WebSocket message is binary. This is done by checking if the binary input is not null.
 
@@ -159,7 +159,7 @@ WebSocketServerRequest/binaryMessage Is Not Null
 
 Click **Save**.
 
-### Step 3 - Binary branch: transcribe, then chat
+#### Step 3 - Binary branch: transcribe, then chat
 
 On the **If** (binary) branch:
 Click on the + to add component.
@@ -222,7 +222,7 @@ The integration must look like this.
 
 <img src="images/ws-lab2-01-integration.png" alt="Binary branch integration: If-else, Speech to Text, and Chat components" width="70%">
 
-### Step 4 - Activate and test the binary branch
+#### Step 4 - Activate and test the binary branch
 
 Go back to the WebSocket API Configuration:
 
@@ -242,7 +242,7 @@ Go back to the WebSocket API Configuration:
 
 <img src="images/ws-lab2-01-Base64-encoded-Postman.png" alt="Base64Encoded-Postman-message" width="50%">
 
-### Step 5 - Text branch: chat directly
+#### Step 5 - Text branch: chat directly
 
 We will now configure the Else branch to respond to a text-based chat.
 
@@ -268,7 +268,7 @@ The final integration must look like this.
 
 Activate the API
 
-### Step 6 - Postman Mix it up (Voice and text), then disconnect
+#### Step 6 - Postman Mix it up (Voice and text), then disconnect
 
 Send a few more messages, alternating text and voice, on the same connection, to confirm the API keeps handling turns without you reconnecting. Want a different spoken question for each turn? Repeat the [recording and Base64-encoding steps](audio-to-base64.md) to produce a fresh voice message. Then click **Disconnect** in Postman.
 
@@ -282,7 +282,7 @@ A single connection that answers both a typed question and a spoken one, without
 
 In this lab, we build on the `VoiceAssistantFlow` integration from Lab 2 to handle two situations the happy-path flow ignores: an inbound WebSocket message that is neither text nor binary, and a Mistral AI transcription call that fails. Instead of a silent drop or a broken reply, the client gets back a clear, human-readable message either way.
 
-### Step 1 - Guard against a message that is neither text nor binary
+#### Step 1 - Guard against a message that is neither text nor binary
 
 Deactivate the API, then open the `VoiceAssistantFlow` integration (**View Integration** next to `/voiceassistant`).
 
@@ -315,7 +315,7 @@ Label it `Not binary or text`.
 
 > Postman's WebSocket client always tags what you send as either Text or Binary, so you will not be able to trigger this branch directly from Postman. It is there to protect the flow against a future message type, or a protocol-level frame, that reaches the integration with neither field populated.
 
-### Step 2 - Check whether transcription succeeded before calling Chat
+#### Step 2 - Check whether transcription succeeded before calling Chat
 
 On the binary branch, click the **+** symbol immediately after **Convert Speech to Text** (before **Generate Chat Response**) and add an **If-else** component labeled `Did Transcription Succeed`.
 
@@ -343,7 +343,7 @@ The final integration must look like this
 
 <img src="images/ws-lab3-04b-full-integration.png" alt="Full integration with the binary branch's transcription success/failure check and the text and unsupported-message branches all wired in" width="70%">
 
-### Step 3 - Activate and test the failure paths
+#### Step 3 - Activate and test the failure paths
 
 Activate the API.
 
@@ -355,7 +355,7 @@ Now deliberately force a failure: send an empty or corrupted binary message. You
 
 This confirms the assistant now degrades gracefully: a malformed or unprocessable message gets a clear apology reply, rather than silence or a broken response.
 
-### Step 4 - Review the request in Fusion Monitoring
+#### Step 4 - Review the request in Fusion Monitoring
 
 The client only ever sees the friendly reply - but as the integration owner, you still need to see what actually failed underneath it. Open the project's **Monitor** section in Fusion and find the transactions for `/voiceassistant`.
 
