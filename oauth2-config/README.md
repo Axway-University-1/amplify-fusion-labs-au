@@ -30,22 +30,12 @@ The flow is described below:
 
 This data flow is illustrated below:
 
-```mermaid
-sequenceDiagram
-    participant Client as Client (Postman)
-    participant KC as Keycloak (fusion realm)
-    participant Fusion as Fusion API Gateway
-    participant API as Protected API
+<img src="images/oauth2-sequence-diagram.png" alt="Sequence diagram: Client obtains an access token from Keycloak via the Authorization Code flow, calls the Fusion API with it as a Bearer token, Fusion fetches Keycloak's JWKS and validates the token's signature, azp, and scope, then forwards the request to the API and returns the 200 OK response" width="90%">
 
-    Client->>KC: 1. Authorization Code flow (login as testuser)
-    KC-->>Client: 2. Access token (JWT)
-    Client->>Fusion: 3. GET /api  (Authorization: Bearer <JWT>)
-    Fusion->>KC: 4. Fetch public keys (JWKS)
-    KC-->>Fusion: JWKS
-    Fusion->>Fusion: 5. Validate signature, azp, scope
-    Fusion->>API: 6. Forward request
-    API-->>Client: 7. 200 OK
-```
+<!-- This is a pre-rendered PNG because Jekyll/kramdown does not render ```mermaid fences as diagrams.
+     Editable source: oauth2-sequence-diagram.mmd (config: oauth2-sequence-diagram-config.json, enables text wrap to avoid label overflow).
+     To regenerate after editing it:
+     npx -y @mermaid-js/mermaid-cli -i oauth2-sequence-diagram.mmd -o images/oauth2-sequence-diagram.png -b white -s 3 -c oauth2-sequence-diagram-config.json -->
 
 In this set of labs, you will learn the following:
 
@@ -312,7 +302,7 @@ Still on the Identity Provider form, under **OAuth 2.0 Flows**, add the Authoriz
 
 #### Step 4 - Set inbound security and create the Governance Rule
 
-Go back to the Designer and diable the API if you have enabled it. Then in the API's **Security** tab uses a **Governance Rule** for inbound security. The Governance Rule references the Identity Provider we created in Steps 2-3.
+Go back to the Designer and disable the API if you have enabled it. Then, in the API's **Security** tab, use a **Governance Rule** for inbound security. The Governance Rule references the Identity Provider we created in Steps 2-3.
 
 1. Open the **EmployeeDirectoryAPI** **Configuration** dialog and select the **Security** tab (the same dialog as the General tab where you set the base path in Lab 2)
 2. Set **Inbound Security** to **OAuth 2.0 (JWT Validation)**
