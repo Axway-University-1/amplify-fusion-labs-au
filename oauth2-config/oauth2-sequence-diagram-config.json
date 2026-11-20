@@ -1,0 +1,11 @@
+{
+  "sequence": {
+    "wrap": true,
+    "width": 190,
+    "wrapPadding": 16,
+    "actorMargin": 60,
+    "messageFontSize": 16,
+    "noteFontSize": 14,
+    "boxTextMargin": 8
+  }
+}

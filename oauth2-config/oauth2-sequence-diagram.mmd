@@ -1,0 +1,14 @@
+sequenceDiagram
+    participant Client as Client (Postman)
+    participant KC as Keycloak (fusion realm)
+    participant Fusion as Fusion API Gateway
+    participant API as Protected API
+
+    Client->>KC: 1. Authorization Code flow (login as testuser)
+    KC-->>Client: 2. Access token (JWT)
+    Client->>Fusion: 3. GET /api  (Authorization: Bearer <JWT>)
+    Fusion->>KC: 4. Fetch public keys (JWKS)
+    KC-->>Fusion: JWKS
+    Fusion->>Fusion: 5. Validate signature, azp, scope
+    Fusion->>API: 6. Forward request
+    API-->>Client: 7. 200 OK
